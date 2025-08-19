@@ -1,0 +1,9 @@
+__pycache__/
+.env
+.venv
+env.bak
+
+node_modules/
+npm-debug.log*
+.npm 
+dist/

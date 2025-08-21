@@ -1,25 +1,33 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, func
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import ForeignKey, String, DateTime, func, Enum as SQLEnum
+from enum import Enum
+from sqlalchemy.orm import relationship, Mapped, mapped_column
+from sqlalchemy import Integer
+from app.models.base import Base
 
-Base = declarative_base()
+class MsgFrom(Enum):
+    human = "human"
+    ai = "ai"
 
 class Chat(Base):
     __tablename__ = "chats"
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, nullable=False)
-    last_updated = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    title: Mapped[str] = mapped_column(String, nullable=False)
+    last_updated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
-    messages = relationship("Message", back_populates="chat", cascade="all, delete-orphan")
-
+    messages: Mapped[list["Message"]] = relationship(
+        "Message", back_populates="chat", cascade="all, delete-orphan"
+    )
 
 class Message(Base):
     __tablename__ = "messages"
 
-    id = Column(Integer, primary_key=True, index=True)
-    chat_id = Column(Integer, ForeignKey("chats.id", ondelete="CASCADE"))
-    content = Column(String, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    chat_id: Mapped[int] = mapped_column(ForeignKey("chats.id", ondelete="CASCADE"))
+    content: Mapped[str] = mapped_column(String, nullable=False)
+    msg_from: Mapped[MsgFrom] = mapped_column(SQLEnum(MsgFrom, name="msg_from"), nullable=False)
+    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
-    chat = relationship("Chat", back_populates="messages")
+    chat: Mapped[Chat] = relationship("Chat", back_populates="messages")
+

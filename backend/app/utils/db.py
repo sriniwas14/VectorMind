@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine 
 from sqlalchemy.orm import declarative_base, sessionmaker
+from app.models import chat, document, base
 
 engine = create_engine("postgresql://postgres:mysecretpassword@localhost:5432/vectormind")
-Base = declarative_base()
-db = sessionmaker(bind=engine)
+base.Base.metadata.create_all(bind=engine)
+SessionMaker = sessionmaker(bind=engine)

@@ -33,11 +33,12 @@ class ChatListRes(BaseModel):
 
 class NewChatRes(BaseModel):
     chat_id: int
+    title: str
     message: str
 
 @router.post("/", response_model=NewChatRes)
 def create_chat(payload: NewChatReq):
-    new_chat = Chat(title=payload.message[0:10])
+    new_chat = Chat(title=payload.message[0:20])
 
     msg = Message(content=payload.message, msg_from=MsgFrom.human)
     new_chat.messages.append(msg)
@@ -52,7 +53,7 @@ def create_chat(payload: NewChatReq):
     db.commit()
 
 
-    return NewChatRes(chat_id=new_chat.id, message=get_string_response(response.content))
+    return NewChatRes(chat_id=new_chat.id, title=new_chat.title, message=get_string_response(response.content))
 
 @router.post("/{chat_id}", response_model=ChatRes)
 def get_response(chat_id: int, payload: ChatReq):
@@ -72,9 +73,15 @@ def get_response(chat_id: int, payload: ChatReq):
 
     return ChatRes(message=get_string_response(response.content))
 
+@router.get("/{chat_id}/messages")
+def get_messages(chat_id: int, skip: int = 0, limit: int = 10):
+    messages = db.query(Message).filter(Message.chat_id == chat_id).order_by(Message.created_at).offset(skip).limit(limit).all()
+
+    return  { "messages": messages }
+
 @router.get("/", response_model=ChatListRes)
 def get_chats():  
-    chats = db.query(Chat).order_by(Chat.last_updated).limit(10).all()
+    chats = db.query(Chat).order_by(Chat.last_updated.desc()).limit(10).all()
 
     return { "chats": chats }
 

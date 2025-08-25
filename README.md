@@ -1,10 +1,10 @@
-VectorMind 🧠💡
+# VectorMind 🧠💡
 
 VectorMind is an intuitive app that allows you to upload your own knowledge base and chat with it! Whether you're working on a project, learning something new, or organizing a repository of ideas, VectorMind brings your knowledge to life with an easy-to-use interface and smart interaction.
 
-![VectorMind]("./screenshots/1.png")
+![VectorMind](screenshots/1.png)
 
-Features
+## Features
 
 Upload your knowledge: Add your documents, notes, or even entire databases to create a personalized knowledge base.
 
@@ -14,29 +14,29 @@ Customizable responses: The app adapts and delivers responses based on your spec
 
 Seamless experience: User-friendly design and smooth chat functionality to make your knowledge accessible anytime, anywhere.
 
-How It Works
+## How It Works
 
-Upload: Upload your knowledge base (texts, files, or documents).
+**Upload**: Upload your knowledge base (texts, files, or documents).
 
-Interact: Use the chat interface to ask questions or dive deep into specific topics.
+**Interact**: Use the chat interface to ask questions or dive deep into specific topics.
 
-Get Insights: VectorMind will intelligently respond based on the data you've provided.
+**Get Insights**: VectorMind will intelligently respond based on the data you've provided.
 
-Technologies Used
+##Technologies Used
 
-Python: For backend and logic execution.
+**Python**: For backend and logic execution.
 
-Machine Learning: Powering the chat interactions for smarter responses.
+**Machine Learning**: Powering the chat interactions for smarter responses.
 
-Frontend: Sleek, minimalistic UI for an enjoyable user experience.
+**Frontend**: Sleek, minimalistic UI for an enjoyable user experience.
 
-Getting Started
+## Getting Started
 
-Clone the repository:
+**Clone the repository:**
 
 git clone https://github.com/sriniwas14/VectorMind.git
 
-Docker:
+**Docker Compose**
 
 ```bash
 docker compose up

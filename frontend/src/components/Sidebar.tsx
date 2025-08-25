@@ -6,7 +6,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ collapsed }: SidebarProps) {
-    const { chats, selectedChatId, selectChat, addChat } = useChat();
+    const { chats, selectedChatId, selectChat, addChat, setShowSettings } =
+        useChat();
 
     return (
         <aside
@@ -15,10 +16,12 @@ export default function Sidebar({ collapsed }: SidebarProps) {
       `}
         >
             <h1
-                className={`text-2xl font-bold text-white tracking-tight transition-opacity duration-200 flex`}
+                className={`text-2xl mx-auto font-bold text-white tracking-tight transition-opacity duration-200 flex`}
             >
                 🧠
-                <text className={`ml-4 ${collapsed ? "hidden" : "-1"}`}>
+                <text
+                    className={`ml-4 font-thin ${collapsed ? "hidden" : "-1"}`}
+                >
                     VectorMind
                 </text>
             </h1>
@@ -53,7 +56,10 @@ export default function Sidebar({ collapsed }: SidebarProps) {
                                 : "text-gray-200 hover:bg-white/10"
                         }`}
                     >
-                        <MessageSquare className="mr-2" size={18} />
+                        <MessageSquare
+                            className={collapsed ? "" : "mr-2"}
+                            size={24}
+                        />
                         {!collapsed && <span>{chat.title}</span>}
                     </button>
                 ))}
@@ -65,7 +71,10 @@ export default function Sidebar({ collapsed }: SidebarProps) {
                     <BrainIcon size={18} />
                     {!collapsed && <span>Knowledge Base</span>}
                 </button>
-                <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-gray-200 hover:bg-white/10 transition">
+                <button
+                    onClick={() => setShowSettings(true)}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-gray-200 hover:bg-white/10 transition"
+                >
                     <Settings size={18} />
                     {!collapsed && <span>Settings</span>}
                 </button>

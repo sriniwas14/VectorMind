@@ -1,9 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, func
-from sqlalchemy.orm import declarative_base
 import enum
 from sqlalchemy import Enum
-
-Base = declarative_base()
+from app.models.base import Base
 
 
 class DocumentType(enum.Enum):
@@ -11,7 +9,6 @@ class DocumentType(enum.Enum):
     csv = "csv"
     pdf = "pdf"
     excel = "excel"
-
 
 class Document(Base):
     __tablename__ = "documents"

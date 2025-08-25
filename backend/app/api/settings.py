@@ -5,13 +5,12 @@ from pydantic import BaseModel
 from typing import List
 from app.utils.db import SessionMaker
 from app.models.chat import Chat, Message, MsgFrom
-from app.services.ai import AiModel 
+from app.services.ai import AiModel, ModelProvider
 from app.utils.helpers import get_chat_context, get_string_response
-from app.data.providers import ModelProviders
 
 db = SessionMaker()
 router = APIRouter();
-model = AiModel(provider=ModelProviders.groq, model="llama-3.1-8b-instant", temperature=0.7)
+model = AiModel(provider=ModelProvider.groq, model="llama-3.1-8b-instant", temperature=0.7)
 
 class NewChatReq(BaseModel):
     message: str

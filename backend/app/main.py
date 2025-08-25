@@ -21,4 +21,5 @@ app.add_middleware(
 
 app.include_router(chat.router, prefix="/chats")
 app.include_router(document.router, prefix="/documents")
+app.include_router(settings.router, prefix="/documents")
 

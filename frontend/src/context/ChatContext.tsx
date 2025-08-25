@@ -32,6 +32,8 @@ interface ChatContextType {
     addChat: () => Chat;
     sending: boolean;
     setSending: (v: boolean) => void;
+    showSettings: boolean;
+    setShowSettings: (v: boolean) => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -46,16 +48,17 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
     const [chats, setChats] = useState<Chat[]>([]);
     const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
     const [sending, setSending] = useState<boolean>(false);
+    const [showSettings, setShowSettings] = useState<boolean>(false);
 
     const selectChat = (id: string | null) => setSelectedChatId(id);
 
     useEffect(() => {
         if (!selectedChatId) return;
 
-		const selectedChat = chats.find(c => c.id === selectedChatId)
-		if (selectedChat?.messages.length == 0) {
-			loadMessages(selectedChatId);
-		}
+        const selectedChat = chats.find((c) => c.id === selectedChatId);
+        if (selectedChat?.messages.length == 0) {
+            loadMessages(selectedChatId);
+        }
     }, [selectedChatId]);
 
     const loadMessages = async (chatId: string) => {
@@ -195,6 +198,8 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
                 addChat,
                 sending,
                 setSending,
+                showSettings,
+                setShowSettings,
             }}
         >
             {children}

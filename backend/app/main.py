@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import chat, document
+from app.api import chat, document, settings
 
 app = FastAPI()
 
@@ -21,5 +21,5 @@ app.add_middleware(
 
 app.include_router(chat.router, prefix="/chats")
 app.include_router(document.router, prefix="/documents")
-app.include_router(settings.router, prefix="/documents")
+app.include_router(settings.router, prefix="/settings")
 
